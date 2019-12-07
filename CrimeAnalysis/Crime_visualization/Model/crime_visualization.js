@@ -238,7 +238,7 @@ newWidget = {
                 },
                 axisY: {
                     // valueFormatString:,
-                    title: "Units",
+                    title: "Number of crimes",
                     titleFontSize: 24,
                     xValueFormatString: "Year ####"
                 },
@@ -279,7 +279,7 @@ newWidget = {
                 },
                 axisY: {
                     // valueFormatString:,
-                    title: "Units",
+                    title: "Number of crimes",
                     titleFontSize: 24,
                     xValueFormatString: "Year ####"
                 },
@@ -297,7 +297,7 @@ newWidget = {
                 data: [{
                     type: "bar",
                     showInLegend: true,
-                    name: 'crime in a year',
+                    name: 'Total crimes in a year',
                     dataPoints: crimenum_datapoints
                 }]
             });
@@ -655,7 +655,7 @@ newWidget = {
         fetchStackedBarData: function () {
             var _keys, tempObj = {}, processData = [];
             //fetch and process data 
-            d3.json("https://github.com/Riteshlohiya/Data608_Project_Chicago_Crimes/blob/master/CrimeAnalysis/Crime_visualization/Schema/primary_by_year.json", function (error, data) {
+            d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/primary_by_year.json	", function (error, data) {
                 if (error) throw error;
                 //find out keys 
                 _keys = Object.keys(data[0]);
