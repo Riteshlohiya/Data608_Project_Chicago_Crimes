@@ -111,7 +111,7 @@ title2 = "Non Domestic Crime Rate";
 newWidget = {
     fetchdata: {
         fetchPrimaryData: function () {
-            fetch('../Schema/am_pm.json')
+            fetch('https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/am_pm.json')
                 .then(response => {
                     return response.json();
                 })
@@ -130,7 +130,7 @@ newWidget = {
         },
         fetchdayData: function () {
 
-            fetch('../Schema/day.json')
+            fetch('https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/day.json')
                 .then(response => {
                     return response.json();
                 })
@@ -150,7 +150,7 @@ newWidget = {
         },
         fetchLocationdata: function () {
 
-            fetch('../Schema/location.json')
+            fetch('https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/location.json')
                 .then(response => {
                     return response.json();
                 })
@@ -167,7 +167,7 @@ newWidget = {
 
         },
         fetchYeardata: function () {
-            fetch('../Schema/year.json')
+            fetch('https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/year.json')
                 .then(response => {
                     return response.json();
                 })
@@ -194,7 +194,7 @@ newWidget = {
                 exportEnabled: true,
                 theme: "light1",
                 title: {
-                    text: "No. of Crimes in Daytime or Night"
+                    text: "Crimes by AM and PM"
                 },
                 axisY: {
                     // valueFormatString:,
@@ -234,7 +234,7 @@ newWidget = {
                 exportEnabled: true,
                 theme: "light1",
                 title: {
-                    text: "No. of Crimes on Weekdays or Weekends"
+                    text: "Crimes by weekdays and weekends"
                 },
                 axisY: {
                     // valueFormatString:,
@@ -275,7 +275,7 @@ newWidget = {
                 exportEnabled: true,
                 theme: "light1",
                 title: {
-                    text: "Total Crime in a year"
+                    text: "Total crimes by year"
                 },
                 axisY: {
                     // valueFormatString:,
@@ -309,7 +309,7 @@ newWidget = {
                 animationEnabled: true,
                 height: 800,
                 title: {
-                    text: "Crime As per Location and year"
+                    text: "Crime by location"
                 },
                 axisX: {
                     title: 'Years',
@@ -587,7 +587,7 @@ newWidget = {
         }
 
         // Get the data
-        d3.json("../Schema/arr.json", function (error, data) {
+        d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/arr.json", function (error, data) {
             if (error) throw error;
 
             // trigger render
@@ -602,7 +602,7 @@ newWidget = {
 
             // Get JSON data and wait for the response
 
-            d3.json("../Schema/dom.json", function (error, json) {
+            d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/dom.json", function (error, json) {
                 $.each(json, function (d, i) {
                     data.push({
                         label: 'Domestic crime in' + i.year,
@@ -655,7 +655,7 @@ newWidget = {
         fetchStackedBarData: function () {
             var _keys, tempObj = {}, processData = [];
             //fetch and process data 
-            d3.json("../Schema/primary_by_year.json", function (error, data) {
+            d3.json("https://github.com/Riteshlohiya/Data608_Project_Chicago_Crimes/blob/master/CrimeAnalysis/Crime_visualization/Schema/primary_by_year.json", function (error, data) {
                 if (error) throw error;
                 //find out keys 
                 _keys = Object.keys(data[0]);
@@ -685,7 +685,7 @@ newWidget = {
                         .attr("y", 0 - (margin.top / 2) + 50)
                         .attr("text-anchor", "middle")
                         .style("font-size", "16px")
-                        .text("Type of crimes committed each year");
+                        .text("Crimes by types");
                     g = svg.append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                     x = d3.scaleBand()
@@ -808,7 +808,7 @@ newWidget = {
         fetchBarData: function () {
             var processData = [];
             //fetch and process data 
-            d3.json("../Schema/total_month.json", function (error, data) {
+            d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/total_month.json", function (error, data) {
                 if (error) throw error;
 
                 for (var i = 0; i < data.length; i++) {
@@ -846,7 +846,7 @@ newWidget = {
                         .attr("y", 0 - (margin.top / 2) + 25)
                         .attr("text-anchor", "middle")
                         .style("font-size", "16px")
-                        .text("No. of Crimes in a Month");
+                        .text("Crimes by months");
                     xScale.domain(data.map(function (d) {
                         return d.label;
                     }));
