@@ -9,21 +9,22 @@ window.onload = function () {
         chartContainer5 = $('#chartContainer_5'),
         chartContainer6 = $('#chartContainer_6'),
         chartContainer7 = $('#chartContainer_7'),
+        pieChartBtn = $('#pieExampleBtn'),
         mainContainer = $('.mainContainer');
 
-   
+    pieChartBtn.hide();
     mainContainer.show();
 
     $('.chartsArea>div').hide();
     $('.home').on('click', function () {
         $('.chartsArea>div').hide();
-       
+        pieChartBtn.hide();
         mainContainer.show();
 
     });
     $('.chartSelector').on('click', function () {
         $('.chartsArea>div').hide();
-       
+        pieChartBtn.hide();
         mainContainer.hide();
         chartContainer.show();
         newWidget.fetchdata.fetchPrimaryData();
@@ -31,7 +32,7 @@ window.onload = function () {
     });
     $('.chartSelector_1').on('click', function () {
         $('.chartsArea>div').hide();
-      
+        pieChartBtn.hide();
         mainContainer.hide();
         chartContainer1.show();
         newWidget.fetchdata.fetchdayData();
@@ -45,17 +46,15 @@ window.onload = function () {
         if ($('#chartContainer_2 svg').length < 1) {
             newWidget.d3lineChart();
         }
-       
+        pieChartBtn.hide();
 
     })
     $('.chartSelector_3').on('click', function () {
         $('.chartsArea>div').hide();
         mainContainer.hide();
         chartContainer3.show();
-         if ($('#chartContainer_3 svg').length < 1) {
-           newWidget.d3PieChart.d3PieChartData();
-        }
-        
+        pieChartBtn.show();
+        newWidget.d3PieChart.d3PieChartData();
 
     })
     $('.chartSelector_4').on('click', function () {
@@ -65,13 +64,14 @@ window.onload = function () {
         if ($('#chartContainer_4 svg').length < 1) {
             newWidget.d3StackedBarChart.fetchStackedBarData();
         }
-       
+        pieChartBtn.hide();
 
     })
     $('.chartSelector_5').on('click', function () {
         $('.chartsArea>div').hide();
         mainContainer.hide();
         chartContainer5.show();
+        pieChartBtn.hide();
         newWidget.fetchdata.fetchLocationdata();
 
     })
@@ -82,18 +82,21 @@ window.onload = function () {
         if ($('#chartContainer_6 svg').length < 1) {
             newWidget.d3SimpleBarChart.fetchBarData();
         }
-      
+        pieChartBtn.hide();
 
     })
     $('.chartSelector_7').on('click', function () {
         $('.chartsArea>div').hide();
         mainContainer.hide();
         chartContainer7.show();
+        pieChartBtn.hide();
         newWidget.fetchdata.fetchYeardata();
 
     })
 
-   
+    $("#pieExampleBtn").on("click", function () {
+        newWidget.d3PieChart.d3PieChartData();
+    });
 
 
     // this.newWidget.init();
@@ -594,204 +597,58 @@ newWidget = {
 
     },
     d3PieChart: {
-		d3PieChartData: function () {
-            var margin = {top: 20, right: 200, bottom: 30, left: 100},
-            width = 1000 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+        d3PieChartData: function () {
+            var data = [], data1 = [];
 
-        // parse the date / time
-        var parseTime = d3.timeParse("%Y");
+            // Get JSON data and wait for the response
 
-        // set the ranges
-        var x = d3.scaleTime().range([0, width]);
-        var y = d3.scaleLinear().range([height, 0]);
+            d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/dom.json", function (error, json) {
+                $.each(json, function (d, i) {
+                    data.push({
+                        label: 'Domestic crime in' + i.year,
+                        value: i.domestic
+                    })
+                    data1.push({
+                        label: 'Non Domestic crime in' + i.year,
+                        value: i.non_domestic
+                    })
+                })
 
-        // define the line
-        var valueline = d3.line()
-            .x(function (d) {
-                return x(d.year);
+                pie3 = new d3pie("chartContainer_3", {
+                    "header": {
+                        "title": {
+                            "text": title,
+                            "fontSize": 22,
+                            "font": "verdana"
+                        },
+                    },
+                    "size": {
+                        "canvasHeight": 400,
+                        "canvasWidth": 590
+                    },
+                    "data": {
+                        "content": data
+                    },
+                    "labels": {
+                        "outer": {
+                            "pieDistance": 32
+                        }
+                    }
+                })
+
+                $('#pieExampleBtn').toggleClass("unique");
+
+                if ($('#pieExampleBtn').hasClass('unique')) {
+                    $('#pieExampleBtn').text(title);
+                    pie3.updateProp("data.content", data1);
+                    pie3.updateProp("header.title.text", title2);
+                } else {
+                    $('#pieExampleBtn').text(title2)
+                    pie3.updateProp("header.title.text", title);
+                    pie3.updateProp("data.content", data);
+                }
             })
-            .y(function (d) {
-                return y(d.domestic);
-            });
-        // define the line
-        var valueline2 = d3.line()
-            .x(function (d) {
-                return x(d.year);
-            })
-            .y(function (d) {
-                return y(d.non_domestic);
-            });
-
-        // append the svg obgect to the body of the page
-        // appends a 'group' element to 'svg'
-        // moves the 'group' element to the top left margin
-        var svg = d3.select("#chartContainer_3").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-        function draw(data) {
-
-            // format the data
-            data.forEach(function (d) {
-                d.year = parseTime(d.year);
-                d.domestic = +d.domestic;
-                d.non_domestic = +d.non_domestic;
-            });
-
-            // Scale the range of the data
-            x.domain(d3.extent(data, function (d) {
-                return d.year;
-            }));
-            y.domain([0, d3.max(data, function (d) {
-                return Math.max(d.domestic, d.non_domestic);
-            })]);
-
-            var g = svg.append("g")
-                .attr("transform", "translate(10, 0)");
-
-            // Add the valueline path.
-            svg.append("path")
-                .data([data])
-                .attr("class", "line")
-                .attr("d", valueline);
-            // Add the valueline path.
-            svg.append("path")
-                .data([data])
-                .attr("class", "line2")
-                .attr("d", valueline2);
-            // Add the X Axis
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
-
-            //chart title
-            svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", 0 - (margin.top / 2) + 15)
-                .attr("text-anchor", "middle")
-                .style("font-size", "16px")
-                .text("Arrested and Not Arrested");
-            // Add the Y Axis
-            svg.append("g")
-                .call(d3.axisLeft(y));
-
-            g.selectAll("circle").data(data).enter()
-                .append("circle")
-                .attr("cx", function (d) {
-                    return x(d.year) - 12;
-                })
-                .attr("cy", function (d) {
-                    return y(d.domestic)
-                })
-
-                .attr("r", function (d, i) {
-                    return 10;
-                })
-                .style("fill", "#fcb0b5")
-                .on("mouseover", function (d) {
-
-                    d3.select(this).transition().duration(200).style("fill", "#d30715");
-
-                    g.selectAll("#tooltip").data([d]).enter().append("text")
-                        .attr("id", "tooltip")
-                        .text(function (d, i) {
-                            return d.domestic + ' ' + '-' + ' ' + 'Arrested';
-                        })
-                        .attr("y", function (d) {
-                            return y(d.domestic)
-                        })
-                        .attr("x", function (d) {
-                            return x(d.year);
-                        })
-
-                    g.selectAll("#tooltip_path").data([d]).enter().append("line")
-                        .attr("id", "tooltip_path")
-                        .attr("x1", function (d) {
-                            return x(d.year) - 10
-                        })
-                        .attr("x2", function (d) {
-                            return x(d.year) - 10
-                        })
-                        .attr("y1", height)
-                        .attr("y2", function (d) {
-                            return y(d.domestic)
-                        })
-                        .attr("stroke", "black")
-                        .style("stroke-dasharray", ("3, 3"));
-                })
-                .on("mouseout", function (d) {
-                    d3.select(this).transition().duration(500).style("fill", "#fcb0b5");
-
-                    g.selectAll("#tooltip").remove();
-                    g.selectAll("#tooltip_path").remove();
-                });
-
-            g.selectAll("circle1").data(data).enter()
-                .append("circle")
-                .attr("cx", function (d) {
-                    return x(d.year) - 12;
-                })
-                .attr("cy", function (d) {
-                    return y(+d.non_domestic)
-                })
-                .attr("r", function (d, i) {
-                    return 10;
-                })
-                .style("fill", "#fcb0b5")
-                .on("mouseover", function (d) {
-
-                    d3.select(this).transition().duration(200).style("fill", "#d30715");
-
-                    g.selectAll("#tooltip").data([d]).enter().append("text")
-                        .attr("id", "tooltip")
-                        .text(function (d, i) {
-                            return (d.non_domestic + ' ' + '-' + ' ' + ' Not Arrested');
-                        })
-                        .attr("y", function (d) {
-                            return y(d.non_domestic)
-                        })
-                        .attr("x", function (d) {
-                            return x(d.year);
-                        })
-
-                    g.selectAll("#tooltip_path").data([d]).enter().append("line")
-                        .attr("id", "tooltip_path")
-                        .attr("x1", function (d) {
-                            return x(d.year) - 10
-                        })
-                        .attr("x2", function (d) {
-                            return x(d.year) - 10
-                        })
-                        .attr("y1", height)
-                        .attr("y2", function (d) {
-                            return y(d.non_domestic)
-                        })
-                        .attr("stroke", "black")
-                        .style("stroke-dasharray", ("3, 3"));
-                })
-                .on("mouseout", function (d) {
-                    d3.select(this).transition().duration(500).style("fill", "#fcb0b5");
-
-                    g.selectAll("#tooltip").remove();
-                    g.selectAll("#tooltip_path").remove();
-                });
-
         }
-
-        // Get the data
-        d3.json("https://raw.githubusercontent.com/Riteshlohiya/Data608_Project_Chicago_Crimes/master/CrimeAnalysis/Crime_visualization/Schema/dom.json", function (error, data) {
-            if (error) throw error;
-
-            // trigger render
-            draw(data);
-        });
-        }
-        
-		
     },
 
     d3StackedBarChart: {
@@ -852,9 +709,9 @@ newWidget = {
                         })
                     });
 
-                    /*data.sort(function (a, b) {
+                    data.sort(function (a, b) {
                         return b.total - a.total;
-                    });*/
+                    });
                     x.domain(data.map(function (d) {
                         return d.year;
                     }));

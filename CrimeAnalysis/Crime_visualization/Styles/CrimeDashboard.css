@@ -276,9 +276,7 @@ body {
   fill: #ffab00;
   stroke: #fff;
 }
-.piechartClass{
-  display: none;
-}
+
 
 .main-nav{
   background-color:blanchedalmond;
@@ -287,20 +285,7 @@ body {
   margin-right:5px;
 }
 
-.piechartClass {
- 
-  display: none;
-  background: #1bb1dc;
-  color: #fff;
-  width: 200px;
-  height: 40px;
-  text-align: center;
-  line-height: 1;
-  font-size: 16px;
-  border-radius: 10px;
 
-  margin-top:30px;
-}
 .fas{
   margin-right:5px;
 }
