@@ -195,7 +195,7 @@ newWidget = {
                 },
                 axisY: {
                     // valueFormatString:,
-                    title: "Units",
+                    title: "Number of crimes",
                     titleFontSize: 24
                 },
                 axisX: {
@@ -319,7 +319,7 @@ newWidget = {
                     // verticalAlign: "center",  // top, center, bottom
                 },
                 axisY: {
-                    title: "No of Crime"
+                    title: "Number of Crimes"
                 },
                 data: dataRequired
 
@@ -674,7 +674,7 @@ newWidget = {
                 .attr("y", 0 - (margin.top / 2) + 15)
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
-                .text("Arrested and Not Arrested");
+                .text("Domestic and Non Domestic");
             // Add the Y Axis
             svg.append("g")
                 .call(d3.axisLeft(y));
@@ -699,7 +699,7 @@ newWidget = {
                     g.selectAll("#tooltip").data([d]).enter().append("text")
                         .attr("id", "tooltip")
                         .text(function (d, i) {
-                            return d.domestic + ' ' + '-' + ' ' + 'Arrested';
+                            return d.domestic + ' ' + '-' + ' ' + 'Domestic';
                         })
                         .attr("y", function (d) {
                             return y(d.domestic)
@@ -749,7 +749,7 @@ newWidget = {
                     g.selectAll("#tooltip").data([d]).enter().append("text")
                         .attr("id", "tooltip")
                         .text(function (d, i) {
-                            return (d.non_domestic + ' ' + '-' + ' ' + ' Not Arrested');
+                            return (d.non_domestic + ' ' + '-' + ' ' + ' Non Domestic');
                         })
                         .attr("y", function (d) {
                             return y(d.non_domestic)
