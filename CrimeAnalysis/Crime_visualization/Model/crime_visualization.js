@@ -212,13 +212,13 @@ newWidget = {
                 data: [{
                     type: "spline",
                     showInLegend: true,
-                    name: 'Morning',
+                    name: 'AM crimes',
                     dataPoints: am_datapoints
                 },
                     {
                         type: "spline",
                         showInLegend: true,
-                        name: 'Night',
+                        name: 'PM crimes',
                         dataPoints: pm_datapoints
                     }]
             });
