@@ -319,7 +319,7 @@ newWidget = {
                     // verticalAlign: "center",  // top, center, bottom
                 },
                 axisY: {
-                    title: "No of Crimes"
+                    title: "No of Crimes" 
                 },
                 data: dataRequired
 
