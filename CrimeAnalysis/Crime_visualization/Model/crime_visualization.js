@@ -674,7 +674,7 @@ newWidget = {
                 .attr("y", 0 - (margin.top / 2) + 15)
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
-                .text("Domestic and Non Domestic");
+                .text("Domestic and Non Domestic Crimes");
             // Add the Y Axis
             svg.append("g")
                 .call(d3.axisLeft(y));
