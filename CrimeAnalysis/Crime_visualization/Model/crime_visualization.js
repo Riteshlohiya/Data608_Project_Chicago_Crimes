@@ -306,7 +306,7 @@ newWidget = {
                 animationEnabled: true,
                 height: 800,
                 title: {
-                    text: "Crime by location"
+                    text: "Crimes by location"
                 },
                 axisX: {
                     title: 'Years',
