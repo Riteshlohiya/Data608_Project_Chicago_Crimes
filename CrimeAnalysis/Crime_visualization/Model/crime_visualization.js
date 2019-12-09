@@ -306,7 +306,7 @@ newWidget = {
                 animationEnabled: true,
                 height: 800,
                 title: {
-                    text: "Crime by location"
+                    text: "Crimes by location"
                 },
                 axisX: {
                     title: 'Years',
@@ -319,7 +319,7 @@ newWidget = {
                     // verticalAlign: "center",  // top, center, bottom
                 },
                 axisY: {
-                    title: "Number of Crimes"
+                    title: "No of Crimes"
                 },
                 data: dataRequired
 
@@ -674,7 +674,7 @@ newWidget = {
                 .attr("y", 0 - (margin.top / 2) + 15)
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
-                .text("Domestic and Non Domestic");
+                .text("Domestic and Non Domestic Crimes");
             // Add the Y Axis
             svg.append("g")
                 .call(d3.axisLeft(y));
