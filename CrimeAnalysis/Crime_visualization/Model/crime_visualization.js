@@ -834,7 +834,7 @@ newWidget = {
                     x = d3.scaleBand()
                         .rangeRound([0, width - 250])
                         .paddingInner(0.05).align(0.1),
-                        y = d3.scaleLinear().rangeRound([height, 0]),
+                        y = d3.scaleLinear().domain([0, 6.5e8]).range([height, 0]);
                         z = d3.scaleOrdinal()
                             .range(["#800000", "#ff6600", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]),
                         keys = [];
@@ -909,6 +909,7 @@ newWidget = {
                     g.append("g")
                         .attr("class", "axis")
                         .call(d3.axisLeft(y).ticks(null, "m"))
+						.call(d3.axisLeft(y).ticks(20))
                         .append("text")
                         .attr("x", 2)
                         .attr("y", y(y.ticks().pop()) + 0.5)
